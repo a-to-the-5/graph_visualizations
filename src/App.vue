@@ -1,44 +1,38 @@
 <template>
     <div class="box">
+      <h1 class="title is-1">Heap</h1>
       <div class="columns">
-        <div class="column is-half">
-          <label class="label">Basic ops:</label>
-          <span class="button is-primary" @click="insert">
+        <div class="column is-one-third">
+          <span class="button is-primary is-fullwidth" @click="insert">
             Insert &nbsp; 
             <input @click.stop="" @keydown.enter="insert" type="number" v-model="numToInsert">
           </span>
-          <br>
-          <br>
-          <button class="button is-primary" @click="remove">Remove {{minMax}}</button>
         </div>
-        <div class="column is-half">
-          <label class="label">Quick ops:</label>
-          <button class="button is-primary" @click="insertNext">Insert Next ({{extremeInserted}})</button>
-          <br>
-          <br>
-          <span class="button is-primary" @click="fill">
+        <div class="column is-one-third">
+          <button class="button is-primary is-fullwidth" @click="remove">Remove {{minMax}}</button>
+        </div>
+        <div class="column is-one-third">
+          <span class="button is-primary is-fullwidth" @click="fill">
             Fill with &nbsp; 
             <input @click.stop="" @keydown.enter="fill" type="number" v-model="fillAmount"> 
             &nbsp; values
           </span>
         </div>
       </div>
-      <hr>
       <div class="columns">
         <div class="column is-half">
-          <label class="label">Heap type:</label>
+          <label class="label is-pulled-left">Heap type:</label>&nbsp;&nbsp;
           <input type="radio" id="min" :value="false" v-model="isMax">
           <label for="false"> &nbsp; Min</label>
-          <br>
+          &nbsp;&nbsp;
           <input type="radio" id="max" :value="true" v-model="isMax">
           <label for="true"> &nbsp; Max</label>
         </div>
         <div class="column is-half">
-          <label class="label">Delay:</label>
-          <input type="range" min="0" max="2000" v-model="delay"/>{{delay}}
+          <label class="label is-pulled-left">Animation Delay:</label>&nbsp;&nbsp;
+          <input type="range" min="0" max="2000" v-model="delay"/>&nbsp;{{delay}} ms
         </div>
       </div>
-      <hr>
       <heap ref="heap" :delay="parseInt(delay)" :max="isMax"></heap>
     </div>
 </template>
@@ -59,6 +53,7 @@ export default {
     methods: {
         insert() {
             this.$refs.heap.insert(this.numToInsert);
+            this.updateValueToInsert();
         },
         remove() {
             this.$refs.heap.pop();
@@ -76,6 +71,13 @@ export default {
         },
         fill() {
           this.$refs.heap.populateHeap(this.fillAmount);
+        },
+        updateValueToInsert() {
+          if(this.isMax) {
+            this.numToInsert++;
+          } else {
+            this.numToInsert--;
+          }
         }
     },
     components: {
@@ -86,8 +88,10 @@ export default {
         this.$refs.heap.clear();
         if (value) {
           this.extremeInserted = 0;
+          this.numToInsert = 0;
         } else {
           this.extremeInserted = 100;
+          this.numToInsert = 100;
         }
       }
     },
@@ -98,7 +102,9 @@ export default {
     }
 }
 </script>
-
-<style>
+<style scoped>
 @import "~animate.css/animate.css";
+.button {
+  margin-bottom: 5px;
+}
 </style>

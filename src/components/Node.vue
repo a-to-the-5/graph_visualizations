@@ -79,7 +79,7 @@ export default {
 }
 
 .popping {
-    animation: bubblePop 0.1s;
+    animation: bubblePop 0.12s;
 }
 
 @keyframes bubbleIn {

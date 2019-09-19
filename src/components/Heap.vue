@@ -78,7 +78,7 @@ export default {
             this.beingSwapedIndexes = [];
             this.popping = true;
             this.$forceUpdate();
-            await this.wait(100);
+            await this.wait(120);
             var element = this.elements.pop();
             this.popping = false;
             this.popped.push(element);
